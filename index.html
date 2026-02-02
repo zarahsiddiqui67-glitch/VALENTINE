@@ -1,0 +1,196 @@
+<think>
+First, the task is to create a single-file HTML, CSS, and JavaScript website for a Valentine proposal page.
+
+
+## Outlining page structure  
+- The task is to design a Valentine proposal page using HTML, CSS, and JavaScript in a single file.
+</think>```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Proposal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffe6f2, #ffb3d9);
+            color: #d63384;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #yes {
+            background: #ff69b4;
+            color: white;
+        }
+        #yes:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+        #no {
+            background: #ffb3d9;
+            color: #d63384;
+        }
+        #no:hover {
+            background: #ff99cc;
+        }
+        .message {
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: none;
+        }
+        .celebration {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff69b4;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            animation: confettiFall 2s linear infinite;
+        }
+        @keyframes confettiFall {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my Valentine? 💖</h1>
+        <div class="buttons">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+        </div>
+        <div class="message" id="message"></div>
+    </div>
+    <div class="celebration" id="celebration">
+        <h1>YAY! You’re my Valentine! 💖🌹</h1>
+        <p>I love you so much! ❤️</p>
+    </div>
+
+    <script>
+        const noButton = document.getElementById('no');
+        const yesButton = document.getElementById('yes');
+        const message = document.getElementById('message');
+        const container = document.querySelector('.container');
+        const celebration = document.getElementById('celebration');
+
+        const playfulMessages = [
+            "Try again 😏",
+            "Really? 😭",
+            "Are you sure?? 🥺",
+            "Think about it again 💔",
+            "Don’t break my heart 💘"
+        ];
+
+        let messageIndex = 0;
+
+        noButton.addEventListener('click', () => {
+            // Move the button to a random position
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            const maxX = containerRect.width - buttonRect.width;
+            const maxY = containerRect.height - buttonRect.height;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+
+            // Show a playful message
+            message.textContent = playfulMessages[messageIndex % playfulMessages.length];
+            message.style.display = 'block';
+            messageIndex++;
+        });
+
+        yesButton.addEventListener('click', () => {
+            // Hide the proposal and show celebration
+            container.style.display = 'none';
+            celebration.style.display = 'flex';
+
+            // Add hearts and confetti
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(heart);
+            }
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+            }
+        });
+    </script>
+</body>
+</html>
+```
